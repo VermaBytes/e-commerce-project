@@ -1,0 +1,140 @@
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-grid">
+
+            <!-- Company Info -->
+            <div class="footer-company">
+
+                <h2 class="logo">TechStore</h2>
+
+                <p class="tagline">
+                    Your trusted store for latest mobiles, laptops and gadgets.
+                </p>
+
+                <p class="description">
+                    Shop the newest technology with best prices, fast delivery
+                    and secure payments.
+                </p>
+
+                <div class="social-icons">
+
+                    <a href="#">F</a>
+                    <a href="#">X</a>
+                    <a href="#">I</a>
+                    <a href="#">L</a>
+
+                </div>
+
+            </div>
+
+            <!-- Dynamic Footer Links -->
+
+            <div
+                class="footer-section"
+                *ngFor="let section of footerSections">
+
+                <h3>{{section.title}}</h3>
+
+                <ul>
+
+                    <li *ngFor="let link of section.links">
+                        <a href="#">{{link}}</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!-- Features -->
+
+        <div class="footer-features">
+
+            <!-- Payment -->
+
+            <div class="feature">
+
+                <h4>Payment Methods</h4>
+
+                <div class="payment-list">
+
+                    <span *ngFor="let payment of paymentMethods">
+                        {{payment}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- Newsletter -->
+
+            <div class="feature newsletter">
+
+                <h4>Subscribe Newsletter</h4>
+
+                <p>Get updates on latest offers and deals.</p>
+
+                <div class="newsletter-form">
+
+                    <input
+                        type="email"
+                        placeholder="Enter your email" />
+
+                    <button>Subscribe</button>
+
+                </div>
+
+            </div>
+
+            <!-- Trust -->
+
+            <div class="feature">
+
+                <h4>Customer Trust</h4>
+
+                <ul class="trust">
+
+                    <li>✔ Secure Payments</li>
+                    <li>✔ Fast Delivery</li>
+                    <li>✔ Easy Returns</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bottom Footer -->
+
+    <div class="footer-bottom">
+
+        <div class="bottom-content">
+
+            <div class="left">
+                © {{currentYear}} TechStore. All rights reserved.
+            </div>
+
+            <div class="center">
+                Made with ❤️ for smart shopping
+            </div>
+
+            <div class="right">
+
+                <a href="#">Privacy</a>
+                <span>|</span>
+                <a href="#">Terms</a>
+                <span>|</span>
+                <a href="#">Contact</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>

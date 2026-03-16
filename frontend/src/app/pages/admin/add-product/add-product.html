@@ -1,0 +1,51 @@
+<div class="max-w-2xl p-10 mx-auto mt-10 bg-white shadow-lg rounded-xl">
+
+<h1 class="mb-6 text-2xl font-bold">
+Add New Product
+</h1>
+
+<form [formGroup]="productForm" (ngSubmit)="addProduct()"
+class="space-y-4">
+
+<input
+formControlName="name"
+placeholder="Product Name"
+class="w-full p-3 border rounded"
+/>
+
+<textarea
+formControlName="description"
+placeholder="Product Description"
+class="w-full p-3 border rounded">
+</textarea>
+
+<input
+formControlName="price"
+placeholder="Price"
+type="number"
+class="w-full p-3 border rounded"
+/>
+
+<input
+formControlName="category"
+placeholder="Category"
+class="w-full p-3 border rounded"
+/>
+
+<input
+type="file"
+(change)="onFileSelected($event)"
+class="w-full p-3 border rounded"
+/>
+
+<button
+type="submit"
+class="w-full py-3 text-white bg-indigo-600 rounded hover:bg-indigo-700">
+
+Add Product
+
+</button>
+
+</form>
+
+</div>

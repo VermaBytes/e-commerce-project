@@ -1,0 +1,76 @@
+<div class="max-w-5xl p-6 mx-auto">
+
+    <h1 class="mb-6 text-2xl font-bold">
+        Checkout
+    </h1>
+
+    <!-- Address -->
+
+    <div class="p-6 mb-6 bg-white border rounded-lg">
+
+        <h2 class="mb-4 text-lg font-semibold">
+            Shipping Address
+        </h2>
+
+        <input
+            type="text"
+            placeholder="Full Name"
+            class="w-full p-2 mb-3 border rounded">
+
+        <input
+            type="text"
+            placeholder="Address"
+            class="w-full p-2 mb-3 border rounded">
+
+        <input
+            type="text"
+            placeholder="City"
+            class="w-full p-2 mb-3 border rounded">
+
+        <input
+            type="text"
+            placeholder="Pincode"
+            class="w-full p-2 border rounded">
+
+    </div>
+
+    <!-- Order Summary -->
+
+    <div class="p-6 bg-gray-100 rounded-lg">
+
+        <h2 class="mb-4 text-lg font-semibold">
+            Order Summary
+        </h2>
+
+        <div *ngFor="let item of cartItems"
+            class="flex justify-between mb-2">
+
+            <span>
+                {{item.name}} x {{item.quantity}}
+            </span>
+
+            <span>
+                ₹{{item.price * item.quantity}}
+            </span>
+
+        </div>
+
+        <hr class="my-4">
+
+        <h2 class="text-xl font-bold">
+
+            Total: ₹{{cartService.getTotal()}}
+
+        </h2>
+
+        <button
+            (click)="placeOrder()"
+            class="w-full py-3 mt-6 text-white bg-green-600 rounded-lg">
+
+            Place Order
+
+        </button>
+
+    </div>
+
+</div>

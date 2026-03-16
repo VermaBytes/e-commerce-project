@@ -1,0 +1,40 @@
+<div class="max-w-2xl p-10 mx-auto mt-10 bg-white rounded shadow">
+
+    <h1 class="mb-6 text-2xl font-bold">
+        Edit Product
+    </h1>
+
+    <form
+        [formGroup]="productForm"
+        (ngSubmit)="updateProduct()"
+        class="space-y-4">
+
+        <input
+            formControlName="name"
+            class="w-full p-3 border rounded" />
+
+        <textarea
+            formControlName="description"
+            class="w-full p-3 border rounded">
+</textarea>
+
+        <input
+            formControlName="price"
+            type="number"
+            class="w-full p-3 border rounded" />
+
+        <input
+            formControlName="category"
+            class="w-full p-3 border rounded" />
+
+        <button
+            type="submit"
+            class="w-full py-3 text-white bg-green-600 rounded">
+
+            Update Product
+
+        </button>
+
+    </form>
+
+</div>

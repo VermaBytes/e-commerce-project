@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body{
+background:#b0b0b0;
+}
+.brand-card{
+display:flex;
+align-items:center;
+justify-content:center;
+background:white;
+padding:25px;
+border-radius:15px;
+border:1px solid #eee;
+transition:all .3s ease;
+}
+
+.brand-card img{
+height:40px;
+object-fit:contain;
+}
+
+.brand-card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}

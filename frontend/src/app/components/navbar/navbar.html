@@ -1,0 +1,211 @@
+<header class="fixed left-0 z-50 w-full bg-white shadow">
+
+    <div class="container px-4 mx-auto">
+
+        <div class="flex items-center justify-between h-16">
+
+            <!-- LEFT -->
+
+            <div class="flex items-center space-x-8">
+
+                <div class="text-2xl font-bold text-indigo-600">
+                    TechStore
+                </div>
+
+                <nav class="items-center hidden space-x-6 md:flex">
+
+                    <a routerLink="/"
+                        class="font-medium text-gray-700 hover:text-indigo-600">Home</a>
+                        
+                    <a  routerLink="/laptops"
+                        class="font-medium text-gray-700 hover:text-indigo-600">Laptops</a>
+                    
+                        <a routerLink="/macbooks"
+                        class="font-medium text-gray-700 hover:text-indigo-600">MacBooks</a>
+                    
+                        <a routerLink="/printers"
+                        class="font-medium text-gray-700 hover:text-indigo-600">Printers</a>
+                    
+                        <a routerLink="/keyboards"
+                        class="font-medium text-gray-700 hover:text-indigo-600">Keyboards</a>
+                    
+                        <a routerLink="/mouses"
+                        class="font-medium text-gray-700 hover:text-indigo-600">Mouse</a>
+                    
+                        <a routerLink="/routers"
+                        class="font-medium text-gray-700 hover:text-indigo-600">Routers</a>
+                    
+                        <a routerLink="/pendrives"
+                        class="font-medium text-gray-700 hover:text-indigo-600">PenDrives</a>
+
+                </nav>
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="flex items-center space-x-5">
+
+                <!-- SEARCH -->
+
+                <div class="hidden md:flex">
+
+                    <div class="flex w-72">
+
+                        <input
+                            type="text"
+                            placeholder="Search products..."
+                            class="w-full px-3 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+                        <button
+                            class="px-4 text-white bg-indigo-600 rounded-r-lg hover:bg-indigo-700">
+                            🔍
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- WISHLIST -->
+
+                <div
+                    class="relative text-xl cursor-pointer hover:text-indigo-600">
+                    ❤
+                    <span
+                        class="absolute px-1 text-xs text-white bg-red-500 rounded-full -top-2 -right-2">
+                        4
+                    </span>
+                </div>
+
+                <!-- CART -->
+
+                <div routerLink="/cart"
+                    class="relative text-xl cursor-pointer hover:text-indigo-600">
+
+                    🛒
+
+                    <span
+                        class="absolute px-1 text-xs text-white bg-red-500 rounded-full -top-2 -right-2">
+                        {{cartService.getCount()}}
+                    </span>
+
+                </div>
+
+                <!-- USER PROFILE -->
+
+                <div class="relative">
+
+                    <!-- USER ICON BEFORE LOGIN -->
+                    <button
+                        *ngIf="!isLoggedIn"
+                        (click)="openAuthModal()"
+                        class="text-xl hover:text-indigo-600">
+
+                        👤
+
+                    </button>
+
+                    <!-- USER AVATAR AFTER LOGIN -->
+                    <button
+                        *ngIf="isLoggedIn"
+                        (click)="toggleProfile()"
+                        class="flex items-center justify-center text-white bg-indigo-600 rounded-full w-9 h-9">
+
+                        {{ userLetter }}
+
+                    </button>
+
+                    <!-- USER DROPDOWN -->
+                    <div
+                        *ngIf="isLoggedIn && profileMenu"
+                        class="absolute right-0 w-48 mt-3 bg-white border shadow-lg rounded-xl">
+
+                        <!-- USER NAME -->
+                        <div class="px-4 py-2 text-sm text-gray-500 border-b">
+                            Hello, {{ userName }}
+                        </div>
+
+                        <!-- MENU ITEMS -->
+                        <a class="block px-4 py-2 hover:bg-gray-100">
+                            My Profile
+                        </a>
+
+                        <a class="block px-4 py-2 hover:bg-gray-100">
+                            My Orders
+                        </a>
+
+                        <a class="block px-4 py-2 hover:bg-gray-100">
+                            Help
+                        </a>
+
+                        <!-- LOGOUT -->
+                        <button
+                            (click)="logout()"
+                            class="block w-full px-4 py-2 text-left text-red-500 hover:bg-gray-100">
+
+                            Logout
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- Auth MODAL -->
+                <app-auth-modal
+                    *ngIf="showAuthModal"
+                    (loginSuccess)="onLoginSuccess($event)"
+                    (close)="showAuthModal=false">
+                </app-auth-modal>
+                <!-- MOBILE BUTTON -->
+
+                <button
+                    class="text-2xl md:hidden"
+                    (click)="toggleMobileMenu()">
+
+                    ☰
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MOBILE SEARCH -->
+
+    <div class="px-4 pb-3 md:hidden">
+
+        <input
+            type="text"
+            placeholder="Search products..."
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500" />
+
+    </div>
+
+    <!-- MOBILE MENU -->
+
+    <div
+        *ngIf="mobileMenu"
+        class="bg-white border-t md:hidden">
+
+        <a routerLink="/" class="block px-4 py-3 border-b hover:bg-gray-50"
+            (click)="closeMobileMenu()">Home</a>
+        <a routerLink="/laptops" class="block px-4 py-3 border-b hover:bg-gray-50"
+            (click)="closeMobileMenu()">Laptops</a>
+        <a routerLink="/macbooks" class="block px-4 py-3 border-b hover:bg-gray-50"
+            (click)="closeMobileMenu()">MacBooks</a>
+        <a routerLink="/printers" class="block px-4 py-3 border-b hover:bg-gray-50"
+            (click)="closeMobileMenu()">Printers</a>
+        <a routerLink="/keyboards" class="block px-4 py-3 border-b hover:bg-gray-50"
+            (click)="closeMobileMenu()">Keyboards</a>
+        <a routerLink="/mouse" class="block px-4 py-3 border-b hover:bg-gray-50"
+            (click)="closeMobileMenu()">Mouse</a>
+        <a routerLink="/routers" class="block px-4 py-3 border-b hover:bg-gray-50"
+            (click)="closeMobileMenu()">Routers</a>
+        <a routerLink="/pendrives" class="block px-4 py-3 border-b hover:bg-gray-50"
+            (click)="closeMobileMenu()">PenDrives</a>
+
+    </div>
+</header>

@@ -1,0 +1,89 @@
+<div class="max-w-5xl p-6 mx-auto">
+
+    <h1 class="mb-6 text-2xl font-bold">
+        Shopping Cart
+    </h1>
+
+    <div *ngFor="let item of cartItems"
+        class="flex items-center justify-between p-4 mb-4 bg-white border rounded-lg shadow-sm">
+
+        <div class="flex items-center gap-4">
+
+            <img
+                [src]="'http://localhost:5000/images/'+item.image"
+                class="object-cover w-20 h-20 rounded">
+
+            <div>
+
+                <h2 class="font-semibold">
+                    {{item.name}}
+                </h2>
+
+                <p class="text-indigo-600">
+                    ₹{{item.price}}
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Quantity -->
+
+        <div class="flex items-center gap-2">
+
+            <button
+                (click)="cartService.decreaseQty(item)"
+                class="px-3 py-1 bg-gray-200 rounded">
+
+                -
+
+            </button>
+
+            <span class="px-3">
+                {{item.quantity}}
+            </span>
+
+            <button
+                (click)="cartService.increaseQty(item)"
+                class="px-3 py-1 bg-gray-200 rounded">
+
+                +
+
+            </button>
+
+        </div>
+
+        <!-- Remove -->
+
+        <button
+            (click)="cartService.removeItem(item.id)"
+            class="text-red-500">
+
+            Remove
+
+        </button>
+
+    </div>
+
+    <!-- Total -->
+
+    <div
+        class="flex items-center justify-between p-6 mt-6 bg-gray-100 rounded-lg">
+
+        <h2 class="text-xl font-semibold">
+
+            Total: ₹{{cartService.getTotal()}}
+
+        </h2>
+
+        <button
+            routerLink="/checkout"
+            class="px-6 py-2 text-white bg-green-600 rounded-lg">
+
+            Checkout
+
+        </button>
+
+    </div>
+
+</div>
