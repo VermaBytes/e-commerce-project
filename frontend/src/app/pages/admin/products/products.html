@@ -12,7 +12,7 @@
             <th>Name</th>
             <th>Price</th>
             <th>Category</th>
-            <th>Action</th> 
+            <th>Action</th>   
         </tr>
 
         <tr *ngFor="let product of products"
@@ -22,7 +22,6 @@
                 <img
                     [src]="'http://localhost:5000/images/'+product.image"
                     class="object-cover w-16 h-16 mx-auto">
-
             </td>
 
             <td>{{product.name}}</td>

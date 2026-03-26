@@ -1,30 +1,38 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  private API = "http://localhost:5000/api/auth";
+  private api = 'http://localhost:5000/api/auth';
 
   constructor(private http: HttpClient) {}
 
-  // register(data:any):Observable<any>{
-  //   return this.http.post(`${this.API}/register`,data);
-  // }
+  sendOtp(email: string) {
+    return this.http.post(`${this.api}/send-otp`, { email });
+  }
 
-  // login(data:any):Observable<any>{
-  //   return this.http.post(`${this.API}/login`,data);
-  // }
+  verifyOtp(email: string, otp: string) {
+    return this.http.post(`${this.api}/verify-otp`, { email, otp });
+  }
 
-  sendOtp(data:any){
-return this.http.post("http://localhost:5000/api/auth/send-otp",data)
-}
+  register(data: any) {
+    return this.http.post(`${this.api}/register`, data);
+  }
 
-verifyOtp(data:any){
-return this.http.post("http://localhost:5000/api/auth/verify-otp",data)
-}
+  login(data: any) {
+    return this.http.post(`${this.api}/login`, data);
+  }
 
+  saveToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  isLoggedIn() {
+    return !!this.getToken();
+  }
 }

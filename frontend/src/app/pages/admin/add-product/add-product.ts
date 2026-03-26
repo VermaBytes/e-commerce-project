@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from '../../../services/Products-services/product';
 
 @Component({
@@ -12,16 +12,16 @@ import { ProductService } from '../../../services/Products-services/product';
 export class AddProductComponent {
   productForm: any;
   selectedFile: any;
-
+ @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
   ) {
     this.productForm = this.fb.group({
-      name: [''],
-      description: [''],
-      price: [''],
-      category: [''],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      price: ['', Validators.required],
+      category: ['', Validators.required],
     });
   }
 
@@ -42,6 +42,15 @@ export class AddProductComponent {
 
     this.productService.addProduct(formData).subscribe((res) => {
       alert('Product Added Successfully');
+
+      // ✅ Form reset
+      this.productForm.reset();
+
+      // ✅ File clear
+      this.selectedFile = null;
+
+       // ✅ File input UI reset
+    this.fileInput.nativeElement.value = '';
     });
   }
 }

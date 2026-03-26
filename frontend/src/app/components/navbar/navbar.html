@@ -8,34 +8,35 @@
 
             <div class="flex items-center space-x-8">
 
-                <div class="text-2xl font-bold text-indigo-600">
-                    TechStore
-                </div>
+                <img
+                    src="assets/images/COMPANY LOGO.jpeg"
+                    alt="TechStore Logo"
+                    class="w-auto h-10" />
 
                 <nav class="items-center hidden space-x-6 md:flex">
 
                     <a routerLink="/"
                         class="font-medium text-gray-700 hover:text-indigo-600">Home</a>
-                        
-                    <a  routerLink="/laptops"
+
+                    <a routerLink="/laptops"
                         class="font-medium text-gray-700 hover:text-indigo-600">Laptops</a>
-                    
-                        <a routerLink="/macbooks"
+
+                    <a routerLink="/macbooks"
                         class="font-medium text-gray-700 hover:text-indigo-600">MacBooks</a>
-                    
-                        <a routerLink="/printers"
+
+                    <a routerLink="/printers"
                         class="font-medium text-gray-700 hover:text-indigo-600">Printers</a>
-                    
-                        <a routerLink="/keyboards"
+
+                    <a routerLink="/keyboards"
                         class="font-medium text-gray-700 hover:text-indigo-600">Keyboards</a>
-                    
-                        <a routerLink="/mouses"
+
+                    <a routerLink="/mouses"
                         class="font-medium text-gray-700 hover:text-indigo-600">Mouse</a>
-                    
-                        <a routerLink="/routers"
+
+                    <a routerLink="/routers"
                         class="font-medium text-gray-700 hover:text-indigo-600">Routers</a>
-                    
-                        <a routerLink="/pendrives"
+
+                    <a routerLink="/pendrives"
                         class="font-medium text-gray-700 hover:text-indigo-600">PenDrives</a>
 
                 </nav>
@@ -102,7 +103,6 @@
                         class="text-xl hover:text-indigo-600">
 
                         👤
-
                     </button>
 
                     <!-- USER AVATAR AFTER LOGIN -->
@@ -126,11 +126,15 @@
                         </div>
 
                         <!-- MENU ITEMS -->
-                        <a class="block px-4 py-2 hover:bg-gray-100">
+                        <a
+                            routerLink="/profile"
+                            class="block px-4 py-2 hover:bg-gray-100">
                             My Profile
                         </a>
 
-                        <a class="block px-4 py-2 hover:bg-gray-100">
+                        <a
+                            routerLink="/my-order"
+                            class="block px-4 py-2 hover:bg-gray-100">
                             My Orders
                         </a>
 
@@ -192,19 +196,25 @@
 
         <a routerLink="/" class="block px-4 py-3 border-b hover:bg-gray-50"
             (click)="closeMobileMenu()">Home</a>
-        <a routerLink="/laptops" class="block px-4 py-3 border-b hover:bg-gray-50"
+        <a routerLink="/laptops"
+            class="block px-4 py-3 border-b hover:bg-gray-50"
             (click)="closeMobileMenu()">Laptops</a>
-        <a routerLink="/macbooks" class="block px-4 py-3 border-b hover:bg-gray-50"
+        <a routerLink="/macbooks"
+            class="block px-4 py-3 border-b hover:bg-gray-50"
             (click)="closeMobileMenu()">MacBooks</a>
-        <a routerLink="/printers" class="block px-4 py-3 border-b hover:bg-gray-50"
+        <a routerLink="/printers"
+            class="block px-4 py-3 border-b hover:bg-gray-50"
             (click)="closeMobileMenu()">Printers</a>
-        <a routerLink="/keyboards" class="block px-4 py-3 border-b hover:bg-gray-50"
+        <a routerLink="/keyboards"
+            class="block px-4 py-3 border-b hover:bg-gray-50"
             (click)="closeMobileMenu()">Keyboards</a>
         <a routerLink="/mouse" class="block px-4 py-3 border-b hover:bg-gray-50"
             (click)="closeMobileMenu()">Mouse</a>
-        <a routerLink="/routers" class="block px-4 py-3 border-b hover:bg-gray-50"
+        <a routerLink="/routers"
+            class="block px-4 py-3 border-b hover:bg-gray-50"
             (click)="closeMobileMenu()">Routers</a>
-        <a routerLink="/pendrives" class="block px-4 py-3 border-b hover:bg-gray-50"
+        <a routerLink="/pendrives"
+            class="block px-4 py-3 border-b hover:bg-gray-50"
             (click)="closeMobileMenu()">PenDrives</a>
 
     </div>

@@ -1,113 +1,148 @@
-const Product = require("../models/productModal");
 const db = require("../config/db");
 
-exports.getLaptopProducts = (req, res) => {
-  Product.getLaptops((err, result) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
-
-    res.json(result);
-  });
+// 🟢 GET ALL PRODUCTS
+exports.getAllProducts = async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM products");
+    res.json(result.rows);
+  } catch (err) {
+    console.error("GET ALL ERROR:", err);
+    res.status(500).json(err);
+  }
 };
 
-exports.getProductDetails = (req, res) => {
-  const id = req.params.id;
-
-  Product.getProductById(id, (err, result) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
-
-    res.json(result[0]);
-  });
+// 🟢 GET LAPTOP PRODUCTS
+exports.getLaptopProducts = async (req, res) => {
+  try {
+    const result = await db.query(
+      "SELECT * FROM products WHERE category=$1",
+      ["laptops"]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("LAPTOP ERROR:", err);
+    res.status(500).json(err);
+  }
 };
 
-exports.getAllProducts = (req, res) => {
-  const sql = "SELECT * FROM products";
+// 🟢 ADD PRODUCT
+exports.addProduct = async (req, res) => {
+  try {
+    const { name, description, price, category } = req.body;
 
-  db.query(sql, (err, result) => {
-    if (err) {
-      return res.status(500).json(err);
+    // 🔥 Check image
+    if (!req.file) {
+      return res.status(400).json({ message: "Image is required ❌" });
     }
 
-    res.json(result);
-  });
-};
+    const image = req.file.filename;
 
-exports.addProduct = (req, res) => {
-  const { name, description, price, category } = req.body;
-
-  const image = req.file.filename;
-
-  const sql = `
-INSERT INTO products (name,description,price,category,image)
-VALUES (?,?,?,?,?)
-`;
-
-  db.query(sql, [name, description, price, category, image], (err, result) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
+    await db.query(
+      `INSERT INTO products (name, description, price, category, image)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [name, description, price, category, image]
+    );
 
     res.json({
-      message: "Product Added Successfully",
+      message: "Product Added Successfully ✅",
     });
-  });
+
+  } catch (err) {
+    console.error("ADD ERROR:", err);
+    res.status(500).json(err);
+  }
 };
 
-exports.deleteProduct = (req, res) => {
-  const id = req.params.id;
+// 🟢 DELETE PRODUCT
+exports.deleteProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
 
-  const sql = "DELETE FROM products WHERE id=?";
-
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
+    await db.query("DELETE FROM products WHERE id=$1", [id]);
 
     res.json({
-      message: "Product Deleted",
+      message: "Product Deleted Successfully ✅",
     });
-  });
+
+  } catch (err) {
+    console.error("DELETE ERROR:", err);
+    res.status(500).json(err);
+  }
 };
 
-exports.getProduct = (req, res) => {
-  const id = req.params.id;
+// 🟢 GET SINGLE PRODUCT
+exports.getProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
 
-  const sql = "SELECT * FROM products WHERE id=?";
+    const result = await db.query(
+      "SELECT * FROM products WHERE id=$1",
+      [id]
+    );
 
-  db.query(sql, [id], (err, result) => {
-    res.json(result[0]);
-  });
+    res.json(result.rows[0]);
+
+  } catch (err) {
+    console.error("GET ONE ERROR:", err);
+    res.status(500).json(err);
+  }
 };
 
+// 🟢 UPDATE PRODUCT
+exports.updateProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { name, description, price, category } = req.body;
 
-// UPDATE PRODUCT
+    await db.query(
+      `UPDATE products 
+       SET name=$1, description=$2, price=$3, category=$4
+       WHERE id=$5`,
+      [name, description, price, category, id]
+    );
 
-exports.updateProduct = (req, res) => {
+    res.json({
+      message: "Product Updated Successfully ✅",
+    });
 
-const id = req.params.id;
+  } catch (err) {
+    console.error("UPDATE ERROR:", err);
+    res.status(500).json(err);
+  }
+};
 
-const { name, description, price, category } = req.body;
+// 🟢 GET PRODUCTS BY CATEGORY
+exports.getProductsByCategory = async (req, res) => {
+  try {
+    const category = req.params.category;
 
-const sql = `
-UPDATE products 
-SET name=?, description=?, price=?, category=? 
-WHERE id=?`;
+    const result = await db.query(
+      "SELECT * FROM products WHERE category=$1",
+      [category]
+    );
 
-db.query(sql,
-[name, description, price, category, id],
-(err, result) => {
+    res.json(result.rows);
 
-if(err){
-return res.status(500).json(err);
-}
+  } catch (err) {
+    console.error("CATEGORY ERROR:", err);
+    res.status(500).json(err);
+  }
+};
 
-res.json({
-message:"Product Updated Successfully"
-});
+// 🟢 GET PRODUCT DETAILS
+exports.getProductDetails = async (req, res) => {
+  try {
+    const id = req.params.id;
 
-});
+    const result = await db.query(
+      "SELECT * FROM products WHERE id=$1",
+      [id]
+    );
 
+    res.json(result.rows[0]);
+
+  } catch (err) {
+    console.error("DETAIL ERROR:", err);
+    res.status(500).json(err);
+  }
 };

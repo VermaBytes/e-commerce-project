@@ -1,71 +1,142 @@
-<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+<!-- BACKDROP -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
 
-<div class="w-full max-w-sm p-6 bg-white rounded-xl">
+  <!-- MODAL -->
+  <div class="relative w-full max-w-md p-6 bg-white shadow-xl rounded-2xl">
 
-<button
-(click)="closeModal()"
-class="absolute text-lg top-3 right-3">
-✕
-</button>
+    <!-- CLOSE BUTTON -->
+    <button
+      (click)="close.emit()"
+      class="absolute text-xl text-gray-500 top-3 right-3 hover:text-black">
+      ✕
+    </button>
 
-<h2 class="mb-4 text-xl font-semibold text-center">
-Create Account
-</h2>
+    <!-- TITLE -->
+    <h2 class="mb-4 text-2xl font-semibold text-center">
+      {{ mode === 'login' ? 'Welcome Back 👋' : 'Create Account 🚀' }}
+    </h2>
 
-<p *ngIf="error" class="text-red-500">{{error}}</p>
+    <!-- TABS -->
+    <div class="flex mb-6 overflow-hidden bg-gray-100 rounded-lg">
 
-<!-- USER INFO FORM -->
+      <button
+        (click)="switchMode('login')"
+        [class.bg-white]="mode==='login'"
+        class="w-1/2 py-2 font-medium">
+        Login
+      </button>
 
-<form *ngIf="!otpSent" (ngSubmit)="sendOtp()" #form="ngForm">
+      <button
+        (click)="switchMode('register')"
+        [class.bg-white]="mode==='register'"
+        class="w-1/2 py-2 font-medium">
+        Register
+      </button>
 
-<input
-[(ngModel)]="name"
-name="name"
-required
-placeholder="Full Name"
-class="w-full px-3 py-2 mb-3 border rounded">
+    </div>
 
-<input
-[(ngModel)]="email"
-name="email"
-required
-placeholder="Email"
-class="w-full px-3 py-2 mb-3 border rounded">
+    <!-- ERROR -->
+    <div *ngIf="errorMsg"
+         class="p-2 mb-3 text-sm text-red-600 bg-red-100 rounded">
+      {{ errorMsg }}
+    </div>
 
-<input
-[(ngModel)]="mobile"
-name="mobile"
-required
-placeholder="Mobile Number"
-class="w-full px-3 py-2 mb-3 border rounded">
+    <!-- SUCCESS -->
+    <div *ngIf="successMsg"
+         class="p-2 mb-3 text-sm text-green-600 bg-green-100 rounded">
+      {{ successMsg }}
+    </div>
 
-<button
-type="submit"
-class="w-full py-2 text-white bg-indigo-600 rounded">
-Send OTP
-</button>
+    <!-- LOGIN -->
+    <div *ngIf="mode === 'login'" class="space-y-3">
 
-</form>
+      <input [(ngModel)]="loginData.email"
+        placeholder="Email"
+        class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-400">
 
-<!-- OTP FORM -->
+      <input [(ngModel)]="loginData.password"
+        type="password"
+        placeholder="Password"
+        class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-indigo-400">
 
-<form *ngIf="otpSent" (ngSubmit)="verifyOtp()">
+      <button (click)="login()"
+        [disabled]="loading"
+        class="flex items-center justify-center w-full py-3 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700">
 
-<input
-[(ngModel)]="otp"
-name="otp"
-required
-placeholder="Enter OTP"
-class="w-full px-3 py-2 mb-3 border rounded">
+        <span *ngIf="loading"
+          class="w-5 h-5 border-2 border-white rounded-full border-t-transparent animate-spin"></span>
 
-<button
-type="submit"
-class="w-full py-2 text-white bg-green-600 rounded">
-Verify OTP
-</button>
+        <span *ngIf="!loading">Login</span>
 
-</form>
+      </button>
+
+    </div>
+
+    <!-- REGISTER -->
+    <div *ngIf="mode === 'register'" class="space-y-3">
+
+  <!-- EMAIL + SEND OTP -->
+  <div *ngIf="!otpSent">
+    <input [(ngModel)]="email"
+      placeholder="Enter Email"
+      class="w-full p-3 border rounded-lg">
+
+    <button (click)="sendOtp()"
+      class="w-full py-3 text-white bg-indigo-600 rounded-lg">
+      Send OTP
+    </button>
+  </div>
+
+  <!-- OTP INPUT -->
+  <div *ngIf="otpSent && !otpVerified">
+
+    <input [(ngModel)]="otp"
+      placeholder="Enter OTP"
+      class="w-full p-3 border rounded-lg">
+
+    <button (click)="verifyOtp()"
+      class="w-full py-3 text-white bg-indigo-600 rounded-lg">
+      Verify OTP
+    </button>
+
+    <!-- TIMER -->
+    <p class="mt-2 text-sm text-gray-500">
+      ⏳ {{ timer }} sec remaining
+    </p>
+
+    <!-- RESEND -->
+    <button *ngIf="canResend"
+      (click)="sendOtp()"
+      class="mt-2 text-sm text-indigo-600">
+      Resend OTP
+    </button>
+
+  </div>
+
+  <!-- CREATE ACCOUNT -->
+  <div *ngIf="otpVerified">
+
+    <input [(ngModel)]="userData.name"
+      placeholder="Full Name"
+      class="w-full p-3 border rounded-lg">
+
+    <input [(ngModel)]="userData.password"
+      type="password"
+      placeholder="Password"
+      class="w-full p-3 border rounded-lg">
+
+    <input [(ngModel)]="userData.phone"
+      placeholder="Phone"
+      class="w-full p-3 border rounded-lg">
+
+    <button (click)="register()"
+      class="w-full py-3 text-white bg-indigo-600 rounded-lg">
+      Create Account
+    </button>
+
+  </div>
 
 </div>
 
+  </div>
 </div>

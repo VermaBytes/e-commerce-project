@@ -1,51 +1,77 @@
 <div class="max-w-2xl p-10 mx-auto mt-10 bg-white shadow-lg rounded-xl">
 
-<h1 class="mb-6 text-2xl font-bold">
-Add New Product
-</h1>
+    <h1 class="mb-6 text-2xl font-bold">
+        Add New Product
+    </h1>
 
-<form [formGroup]="productForm" (ngSubmit)="addProduct()"
-class="space-y-4">
+    <form [formGroup]="productForm"
+        (ngSubmit)="addProduct()"
+        class="space-y-4">
 
-<input
-formControlName="name"
-placeholder="Product Name"
-class="w-full p-3 border rounded"
-/>
+        <!-- Product Name -->
 
-<textarea
-formControlName="description"
-placeholder="Product Description"
-class="w-full p-3 border rounded">
+        <input
+            formControlName="name"
+            placeholder="Product Name"
+            class="w-full p-3 border rounded" />
+
+        <!-- Description -->
+
+        <textarea
+            formControlName="description"
+            placeholder="Product Description"
+            class="w-full p-3 border rounded">
 </textarea>
 
-<input
-formControlName="price"
-placeholder="Price"
-type="number"
-class="w-full p-3 border rounded"
-/>
+        <!-- Price -->
 
-<input
-formControlName="category"
-placeholder="Category"
-class="w-full p-3 border rounded"
-/>
+        <input
+            formControlName="price"
+            type="number"
+            placeholder="Price"
+            class="w-full p-3 border rounded" />
 
-<input
-type="file"
-(change)="onFileSelected($event)"
-class="w-full p-3 border rounded"
-/>
+        <!-- CATEGORY DROPDOWN -->
 
-<button
-type="submit"
-class="w-full py-3 text-white bg-indigo-600 rounded hover:bg-indigo-700">
+        <select
+            formControlName="category"
+            class="w-full p-3 border rounded">
 
-Add Product
+            <option value>Select Category</option>
 
-</button>
+            <option value="laptops">Laptops</option>
 
-</form>
+            <option value="macbooks">Mackbooks</option>
+
+            <option value="printers">Printers</option>
+            
+            <option value="routers">Routers</option>
+
+            <option value="pendrive">Pendrive</option>
+
+            <option value="monitors">Monitors</option>
+
+            <option value="keyboard">Keyboard</option>
+
+            <option value="mouse">Mouse</option>
+
+        </select>
+
+        <!-- Image Upload -->
+        
+
+        <input
+            type="file"
+            (change)="onFileSelected($event)"
+            class="w-full p-3 border rounded" #fileInput />
+
+        <button [disabled]="productForm.invalid"
+            class="w-full py-3 text-white bg-indigo-600 rounded hover:bg-indigo-700">
+
+            Add Product
+
+        </button>
+
+    </form>
 
 </div>

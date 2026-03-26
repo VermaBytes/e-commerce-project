@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductService } from '../../../services/Products-services/product';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../../../services/cart';
 
 @Component({
   selector: 'app-product-details',
@@ -16,27 +15,54 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService,
-    private router: Router,
+    private  cdr :ChangeDetectorRef
   ) {}
 
-  addToCart() {
-    this.cartService.addToCart(this.product);
+  isInCart: boolean = false;
 
-    alert('Product added to cart');
+ngOnInit() {
+  const id = this.route.snapshot.params['id'];
+
+  this.productService.getProductDetails(id).subscribe((data: any) => {
+    this.product = data;
+    this.cdr.detectChanges();
+
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    this.isInCart = cart.some((item: any) => item.id === this.product.id);
+  });
+}
+
+  
+  addToCart(product: any) {
+
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+  const alreadyExists = cart.find((item: any) => item.id === product.id);
+
+  if (alreadyExists) {
+    alert('⚠️ Product already added in cart');
+    return;
   }
 
-  buyNow() {
-    this.cartService.addToCart(this.product);
+  product.quantity = 1; // default quantity
 
-    this.router.navigate(['/cart']);
-  }
+  cart.push(product);
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
+  localStorage.setItem('cart', JSON.stringify(cart));
 
-    this.productService.getProductDetails(id).subscribe((data: any) => {
-      this.product = data;
-    });
-  }
+  alert('✅ Product added to cart');
+}
+
+buyNow(product: any) {
+
+  // single product store
+  localStorage.setItem('buyNowProduct', JSON.stringify({
+    ...product,
+    quantity: 1
+  }));
+
+  // direct checkout
+  window.location.href = '/checkout';
+}
 }

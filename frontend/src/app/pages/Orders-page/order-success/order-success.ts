@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './order-success.css',
 })
 export class OrderSuccess {
+  
 
 }

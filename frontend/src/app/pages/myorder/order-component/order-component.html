@@ -1,0 +1,52 @@
+<div class="max-w-5xl p-6 mx-auto">
+
+  <h1 class="mb-6 text-3xl font-bold">
+    📦 My Orders
+  </h1>
+
+  <div *ngIf="orders.length === 0"
+       class="text-gray-500">
+    No orders found
+  </div>
+
+  <div *ngFor="let order of orders"
+     class="p-5 mb-6 bg-white rounded shadow">
+
+  <h2 class="font-bold">Order #{{order.id}}</h2>
+  <p>Total: ₹{{order.total}}</p>
+  <p>Product Name: {{order.name}}</p>
+  <!-- STATUS TEXT -->
+  <p class="mt-2 font-semibold">
+    Status: {{order.status}}
+  </p>
+
+  <!-- 🔥 TRACKING BAR -->
+  <div class="flex items-center mt-4">
+
+    <div class="step" [class.active]="order.status === 'Pending' || order.status === 'Accepted' || order.status === 'Shipped' || order.status === 'Delivered'">
+      Pending
+    </div>
+
+    <div class="line" [class.active]="order.status !== 'Pending'"></div>
+
+    <div class="step" [class.active]="order.status === 'Accepted' || order.status === 'Shipped' || order.status === 'Delivered'">
+      Accepted
+    </div>
+
+    <div class="line" [class.active]="order.status === 'Shipped' || order.status === 'Delivered'"></div>
+
+    <div class="step" [class.active]="order.status === 'Shipped' || order.status === 'Delivered'">
+      Shipped
+    </div>
+
+    <div class="line" [class.active]="order.status === 'Delivered'"></div>
+
+    <div class="step" [class.active]="order.status === 'Delivered'">
+      Delivered
+    </div>
+
+  </div>
+
+</div>
+
+</div>

@@ -10,14 +10,6 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getLaptops() {
-    return this.http.get(`${this.API}/laptops`);
-  }
-
-  getProductDetails(id: any) {
-    return this.http.get(`${this.API}/details/${id}`);
-  }
-
   getAllProducts(){
 return this.http.get(`${this.API}/all`);
 }
@@ -37,6 +29,15 @@ return this.http.put(`${this.API}/update/${id}`,data);
 getProduct(id:any){
 return this.http.get(`${this.API}/${id}`);
 }
+
+getProductsByCategory(category:any){
+return this.http.get(`${this.API}/category/${category}`);
+}
+
+getProductDetails(id:any){
+return this.http.get(`${this.API}/details/${id}`);
+}
+
 
 }
 

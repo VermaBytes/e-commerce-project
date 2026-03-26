@@ -1,70 +1,42 @@
-<div class="max-w-6xl p-6 mx-auto">
+<div *ngIf="product"
+    class="grid grid-cols-2 gap-10 p-10">
 
-    <div class="grid items-start grid-cols-1 gap-10 md:grid-cols-2">
+    <div>
 
-        <!-- Product Image -->
-        <div class="p-6 bg-white border shadow-sm rounded-xl">
-            <img
-                [src]="'http://localhost:5000/images/' + product.image"
-                class="object-contain w-full h-96">
-        </div>
+        <img
+            [src]="'http://localhost:5000/images/'+product.image"
+            class="w-full rounded-lg shadow">
+    </div>
 
-        <!-- Product Info -->
-        <div>
+    <div>
 
-            <h1 class="text-3xl font-bold text-gray-800">
-                {{product.name}}
-            </h1>
+        <h1 class="text-3xl font-bold">
+            {{product.name}}
+        </h1>
 
-            <p class="mt-4 leading-relaxed text-gray-600">
-                {{product.description}}
-            </p>
+        <p class="mt-4 text-gray-600">
+            {{product.description}}
+        </p>
 
-            <!-- Price -->
-            <p class="mt-6 text-3xl font-bold text-indigo-600">
-                ₹{{product.price}}
-            </p>
+        <p class="mt-4 text-2xl font-bold text-indigo-600">
+            ₹{{product.price}}
+        </p>
 
-            <!-- Buttons -->
-            <div class="flex gap-4 mt-6">
+        <button
+            (click)="addToCart(product)"
+            [disabled]="isInCart"
+            class="px-6 py-3 mt-6 text-white rounded"
+            [ngClass]="isInCart ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'">
 
-                <button
-                    (click)="addToCart()"
-                    class="px-6 py-3 font-semibold text-white bg-indigo-600 rounded-lg">
+            {{ isInCart ? 'Already Added' : 'Add To Cart' }}
 
-                    Add To Cart
+        </button>
+        <button (click)="buyNow(product)"
+            class="px-6 py-3 mt-6 ml-4 text-white bg-orange-500 rounded">
 
-                </button>
+            Buy Now
 
-                <button
-                    (click)="buyNow()"
-                    class="px-6 py-3 font-semibold text-white bg-green-600 rounded-lg">
-
-                    Buy Now
-
-                </button>
-
-            </div>
-
-            <!-- Features -->
-            <div class="p-4 mt-8 border rounded-lg bg-gray-50">
-
-                <h3 class="mb-3 text-lg font-semibold">
-                    Product Features
-                </h3>
-
-                <ul class="space-y-2 text-gray-600 list-disc list-inside">
-
-                    <li>High Performance Laptop</li>
-                    <li>Latest Processor</li>
-                    <li>16GB RAM & SSD Storage</li>
-                    <li>Long Battery Life</li>
-
-                </ul>
-
-            </div>
-
-        </div>
+        </button>
 
     </div>
 

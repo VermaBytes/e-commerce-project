@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ChangeDetectorRef} from '@angular/core';
 import { ProductService } from '../../../services/Products-services/product';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -12,11 +12,14 @@ import { RouterLink } from '@angular/router';
 export class ProductsComponent implements OnInit {
   products: any[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService,
+              private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
     this.productService.getAllProducts().subscribe((data: any) => {
       this.products = data;
+      this.cdr.detectChanges();
       console.log(data); // Debug
     });
   }

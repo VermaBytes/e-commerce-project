@@ -7,6 +7,8 @@ import { KeyboardsComponents } from './pages/cotegory/keyboards-components/keybo
 import { MouseComponents } from './products-page/mouse-components/mouse-components';
 import { RoutersComponent } from './products-page/routers-component/routers-component';
 import { PendrivesComponent } from './products-page/pendrives-component/pendrives-component';
+import { ProfileComponent } from './pages/profile/profile-component/profile-component';
+import { OrderComponent } from './pages/myorder/order-component/order-component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +26,10 @@ export const routes: Routes = [
   { path: 'routers', component: RoutersComponent },
 
   { path: 'pendrives', component: PendrivesComponent },
+
+   {path: 'profile' , component: ProfileComponent},
+
+   {path: 'my-order' , component: OrderComponent},
 
   {
     path: 'product/:id',
@@ -50,28 +56,34 @@ export const routes: Routes = [
       import('./pages/Orders-page/order-success/order-success').then((m) => m.OrderSuccess),
   },
 
-  {
-    path: 'admin',
-    loadComponent: () => import('./pages/admin/dashboard/dashboard').then((m) => m.Dashboard),
-  },
+{
+  path: 'admin',
+  loadComponent: () =>
+    import('./pages/admin/dashboard/dashboard').then((m) => m.Dashboard),
 
-  {
-    path: 'products',
-    loadComponent: () => import('./pages/admin/products/products').then((m) => m.ProductsComponent),
-  },
-
-  {
-    path: 'add-product',
-    loadComponent: () =>
-      import('./pages/admin/add-product/add-product').then((m) => m.AddProductComponent),
-  },
-
-  {
-    path: 'admin/edit-product/:id',
-    loadComponent: () =>
-      import('./pages/admin/edit-product/edit-product').then((m) => m.EditProductComponent),
-  },
-
+  children: [
+    {
+      path: 'products',
+      loadComponent: () =>
+        import('./pages/admin/products/products').then((m) => m.ProductsComponent),
+    },
+    {
+      path: 'add-product',
+      loadComponent: () =>
+        import('./pages/admin/add-product/add-product').then((m) => m.AddProductComponent),
+    },
+    {
+      path: 'edit-product/:id', 
+      loadComponent: () =>
+        import('./pages/admin/edit-product/edit-product').then((m) => m.EditProductComponent),
+    },
+    {
+      path: 'orders', 
+      loadComponent: () =>
+        import('./pages/admin/orders/orders').then((m) => m.OrdersComponent),
+    },
+  ],
+}
   // {
   //  path:'category/:name',
   //  loadComponent:()=>import('./pages/category/laptops-components/laptops-components')

@@ -1,89 +1,99 @@
-<div class="max-w-5xl p-6 mx-auto">
+<div class="max-w-6xl p-6 mx-auto">
 
-    <h1 class="mb-6 text-2xl font-bold">
-        Shopping Cart
-    </h1>
+  <h1 class="mb-8 text-3xl font-bold text-gray-800">
+    🛒 Shopping Cart
+  </h1>
+
+  <!-- Empty Cart -->
+  <div *ngIf="cartItems.length === 0"
+       class="py-10 text-center text-gray-500">
+    Your cart is empty 😔
+  </div>
+
+  <!-- Cart Items -->
+  <div *ngIf="cartItems.length > 0" class="space-y-4">
 
     <div *ngFor="let item of cartItems"
-        class="flex items-center justify-between p-4 mb-4 bg-white border rounded-lg shadow-sm">
+         class="flex items-center justify-between p-4 bg-white rounded-lg shadow">
 
-        <div class="flex items-center gap-4">
+      <!-- Left -->
+      <div class="flex items-center gap-4">
 
-            <img
-                [src]="'http://localhost:5000/images/'+item.image"
-                class="object-cover w-20 h-20 rounded">
+        <img
+          [src]="'http://localhost:5000/images/' + item.image"
+          class="object-cover w-24 h-24 rounded-lg border">
 
-            <div>
+        <div>
+          <h2 class="text-lg font-semibold text-gray-800">
+            {{item.name}}
+          </h2>
 
-                <h2 class="font-semibold">
-                    {{item.name}}
-                </h2>
-
-                <p class="text-indigo-600">
-                    ₹{{item.price}}
-                </p>
-
-            </div>
-
+          <p class="text-indigo-600 font-bold">
+            ₹{{item.price}}
+          </p>
         </div>
+
+      </div>
+
+      <!-- Right -->
+      <div class="flex items-center gap-4">
 
         <!-- Quantity -->
+        <div class="flex items-center border rounded">
 
-        <div class="flex items-center gap-2">
+          <button (click)="decreaseQty(item)"
+                  class="px-3 py-1 text-lg bg-gray-200 hover:bg-gray-300">
+            -
+          </button>
 
-            <button
-                (click)="cartService.decreaseQty(item)"
-                class="px-3 py-1 bg-gray-200 rounded">
+          <span class="px-4 font-semibold">
+            {{item.quantity}}
+          </span>
 
-                -
-
-            </button>
-
-            <span class="px-3">
-                {{item.quantity}}
-            </span>
-
-            <button
-                (click)="cartService.increaseQty(item)"
-                class="px-3 py-1 bg-gray-200 rounded">
-
-                +
-
-            </button>
+          <button (click)="increaseQty(item)"
+                  class="px-3 py-1 text-lg bg-gray-200 hover:bg-gray-300">
+            +
+          </button>
 
         </div>
 
+        <!-- Subtotal -->
+        <p class="font-semibold text-gray-700 w-24 text-right">
+          ₹{{item.price * item.quantity}}
+        </p>
+
         <!-- Remove -->
-
         <button
-            (click)="cartService.removeItem(item.id)"
-            class="text-red-500">
-
-            Remove
-
+          (click)="removeItem(item)"
+          class="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600">
+          Remove
         </button>
+
+      </div>
 
     </div>
 
-    <!-- Total -->
+  </div>
 
-    <div
-        class="flex items-center justify-between p-6 mt-6 bg-gray-100 rounded-lg">
+  <!-- Summary -->
+  <div *ngIf="cartItems.length > 0"
+       class="p-6 mt-8 bg-white rounded-lg shadow">
 
-        <h2 class="text-xl font-semibold">
-
-            Total: ₹{{cartService.getTotal()}}
-
-        </h2>
-
-        <button
-            routerLink="/checkout"
-            class="px-6 py-2 text-white bg-green-600 rounded-lg">
-
-            Checkout
-
-        </button>
-
+    <div class="flex justify-between text-lg">
+      <span>Total Items:</span>
+      <span>{{totalItems}}</span>
     </div>
+
+    <div class="flex justify-between mt-2 text-2xl font-bold">
+      <span>Total Price:</span>
+      <span class="text-green-600">₹{{total}}</span>
+    </div>
+
+    <button routerLink="/checkout"
+            class="w-full py-3 mt-6 text-white bg-green-600 rounded-lg hover:bg-green-700">
+      Proceed to Checkout
+    </button>
+
+  </div>
 
 </div>

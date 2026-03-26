@@ -1,0 +1,21 @@
+.step {
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #e5e7eb;
+  font-size: 12px;
+}
+
+.step.active {
+  background: #4f46e5;
+  color: white;
+}
+
+.line {
+  height: 2px;
+  width: 40px;
+  background: #e5e7eb;
+}
+
+.line.active {
+  background: #4f46e5;
+}

@@ -4,5 +4,16 @@
 <main class="pt-[110px]">
 <router-outlet></router-outlet>
 <app-footer></app-footer>
+<div *ngIf="toast.show"
+     class="fixed z-50 px-4 py-3 text-white rounded shadow-lg top-5 right-5"
+     [ngClass]="{
+       'bg-green-500': toast.type === 'success',
+       'bg-red-500': toast.type === 'error'
+     }">
 
+  {{ toast.message }}
+
+</div>
 </main>
+
+

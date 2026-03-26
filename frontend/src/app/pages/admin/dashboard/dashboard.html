@@ -10,17 +10,24 @@
 
         <nav class="space-y-4">
 
-            <a routerLink="/products"
+            <a routerLink="products"
                 class="block hover:text-indigo-400">
 
                 Products
 
             </a>
 
-            <a routerLink="/add-product"
+            <a routerLink="add-product"
                 class="block hover:text-indigo-400">
 
                 Add Product
+
+            </a>
+
+            <a routerLink="orders"
+                class="block hover:text-indigo-400">
+
+                Orders
 
             </a>
 
@@ -46,7 +53,7 @@
         <p class="mt-4 text-gray-600">
             Manage your ecommerce products and orders.
         </p>
-
+      <router-outlet></router-outlet>
     </div>
 
 </div>

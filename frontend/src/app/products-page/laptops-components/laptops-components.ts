@@ -7,22 +7,16 @@ import { RouterLink } from '@angular/router';
   selector: 'app-laptops-component',
   standalone: true,
   imports: [CommonModule,RouterLink],
-  templateUrl: './laptops-components.html'
+  templateUrl: './laptops-components.html',
 })
 export class LaptopsComponent implements OnInit {
+  products: any[] = [];
 
-  products:any[]=[];
+  constructor(private productService: ProductService) {}
 
-  constructor(private productService:ProductService){}
-
-  ngOnInit(){
-
-    this.productService.getLaptops().subscribe((data:any)=>{
-
+  ngOnInit() {
+    this.productService.getProductsByCategory('laptops').subscribe((data: any) => {
       this.products = data;
-
     });
-
   }
-
 }

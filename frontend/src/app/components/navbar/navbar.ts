@@ -1,53 +1,57 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthModalComponent } from '../../guards/auth-model/auth-model';
-import { Router,RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, AuthModalComponent,RouterModule],
+  imports: [CommonModule, AuthModalComponent, RouterModule],
   templateUrl: './navbar.html',
 })
 export class Navbar implements OnInit {
+
   profileMenu = false;
   mobileMenu = false;
-  isDropdownOpen = false;
   showAuthModal = false;
   userName = '';
   userLetter = '';
-  isLoggedIn: any;
+  isLoggedIn = false;
 
-  constructor(private router: Router,public cartService:CartService){}
+  constructor(private router: Router, public cartService: CartService) {}
 
- openAuthModal() {
-    if (this.isLoggedIn) {
-      this.profileMenu = !this.profileMenu;
-    } else {
-      this.showAuthModal = true;
-    }
+  // ✅ OPEN MODAL
+  openAuthModal() {
+    console.log("CLICK WORKING"); 
+    //alert("hello user");
+    this.showAuthModal = true;
   }
 
+  // ✅ LOGIN SUCCESS HANDLE
   onLoginSuccess(user: any) {
-    this.isLoggedIn = true;
+  this.isLoggedIn = true;
 
-    this.userName = user.name;
+  this.userName = user?.name || 'User';
+  this.userLetter = this.userName.charAt(0).toUpperCase();
 
-    this.userLetter = this.userName.charAt(0).toUpperCase();
-  }
+  this.showAuthModal = false;
 
+  // ✅ redirect
+  this.router.navigate(['/']);
+}
 
+  // ✅ LOGOUT
   logout() {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('loggedUserName');
-    location.reload();
+    localStorage.clear();
+
+    this.isLoggedIn = false;
+    this.userName = '';
+    this.userLetter = '';
+    this.profileMenu = false;
   }
 
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
+  // UI toggles
   toggleProfile() {
     this.profileMenu = !this.profileMenu;
   }
@@ -64,13 +68,10 @@ export class Navbar implements OnInit {
     const login = localStorage.getItem('isLoggedIn');
 
     if (login) {
-      this.userName = localStorage.getItem('loggedUserName') || '';
-
-      if (this.userName) {
-        this.userLetter = this.userName.charAt(0).toUpperCase();
-      }
-
       this.isLoggedIn = true;
+
+      this.userName = localStorage.getItem('loggedUserName') || 'User';
+      this.userLetter = this.userName.charAt(0).toUpperCase();
     }
   }
 }
